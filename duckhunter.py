@@ -1,17 +1,15 @@
-#! /usr/bin/env python
+#!/usr/bin/env python3
 
-# Created by @binkybear and @byt3bl33d3r
-# Fork and Update by L0Wigh
+#Created by @binkybear and @byt3bl33d3r
 
 import sys
 import re
 import os
-from keyseed import *
 import argparse
 from decimal import Decimal #for conversion milliseconds -> seconds
 
 parser = argparse.ArgumentParser(description='Converts USB rubber ducky scripts to a Nethunter format', epilog="Quack Quack")
-parser.add_argument('-l', type=str, dest='layout', choices=['us', 'fr', 'de', 'es','sv', 'it', 'uk', 'ru','dk','no','pt','be'], help='Keyboard layout')
+parser.add_argument('-l', type=str, dest='layout', choices=['us', 'fr', 'de', 'es', 'sv', 'it', 'uk', 'ru', 'dk', 'no', 'pt', 'be', 'cm', 'ca', 'hu'], help='Keyboard layout')
 parser.add_argument('duckyscript', help='Ducky script to convert')
 parser.add_argument('hunterscript', help='Output script')
 
@@ -24,286 +22,232 @@ tmpfile = open("tmp.txt", "w")
 
 def duckyRules (source):
 
-	tmpfile = source
+    tmpfile = source
 
-	for (k,v) in rules.items():
-		regex = re.compile(k)
-		tmpfile  = regex.sub(v, tmpfile)
+    for (k,v) in list(WINCMD_rules.items()):
+        regex = re.compile(k)
+        tmpfile = regex.sub(v, tmpfile)
 
-	return tmpfile
+    for (k,v) in list(rules.items()):
+        regex = re.compile(k)
+        tmpfile = regex.sub(v, tmpfile)
 
-if __name__ == "__main__": 
+    return tmpfile
 
-	rules = { 
-	 r'ALT' : u'left-alt',
-	 r'GUI' : 'left-meta',
-	 r'WINDOWS' : 'left-meta',
-	 r'COMMAND' : 'left-meta',
-	 r'ALT' : 'left-alt',
-	 r'CONTROL' : 'left-ctrl',
-	 r'CTRL' : 'left-ctrl',
-	 r'SHIFT' : 'left-shift',
-	 r'MENU' : 'left-shift f10',
-	 r'APP' : 'escape',
-	 r'ESCAPE' : 'escape',
-	 r'ESC' : 'esc',
-	 r'END' : 'end',
-	 r'SPACE' : 'space',
-	 r'TAB' : 'tab',
-	 r'PRINTSCREEN' : 'print',
-	 r'ENTER' : 'enter',
-	 r'UPARROW' : 'up',
-	 r'UP' : 'up',
-	 r'DOWNARROW' : 'down',
-	 r'DOWN' : 'down',
-	 r'LEFTARROW' : 'left',
-	 r'LEFT' : 'left',
-	 r'RIGHTARROW' : 'right',
-	 r'RIGHT' : 'right',
-	 r'CAPSLOCK' : 'capslock',
-	 r'F1' : 'f1',
-	 r'F2' : 'f2',
-	 r'F3' : 'f3',
-	 r'F4' : 'f4',
-	 r'F5' : 'f5',
-	 r'F6' : 'f6',
-	 r'F7' : 'f7',
-	 r'F8' : 'f8',
-	 r'F9' : 'f9',
-	 r'F10' : 'f10',
-	 r'DELETE' : 'delete',
-	 r'INSERT' : 'insert',
-	 r'NUMLOCK' : 'numlock',
-	 r'PAGEUP' : 'pgup',
-	 r'PAGEDOWN' : 'pgdown',
-	 r'PRINTSCREEN' : 'print',
-	 r'BREAK' : 'pause',
-	 r'PAUSE' : 'pause',
-	 r'SCROLLLOCK' : 'scrolllock',
-	 r'MOUSE RIGHTCLICK' : '--b2',
-	 r'MOUSE LEFTCLICK' : '--b1',
-	 r'MOUSE leftCLICK' : '--b1', # Regex is lowering LEFT to left so we need to catch it.
-	 r'DELAY' : 'sleep',
-	 r'DEFAULT_DELAY' : '"sleep', # We need to add this in between each line if it's set. For debugging
-	 r'REPEAT' : '"'}
-	
+if __name__ == "__main__":
 
-	# For general keyboard commands
-	prefix = "echo "
-	suffix = " | hid-keyboard /dev/hidg0 keyboard"
+    rules = {
+        r'ALT' : 'left-alt',
+        r'GUI' : 'left-meta',
+        r'WINDOWS' : 'left-meta',
+        r'COMMAND' : 'left-meta',
+        r'ALT' : 'left-alt',
+        r'ALTGR' : 'right-alt',
+        r'CONTROL' : 'left-ctrl',
+        r'CTRL' : 'left-ctrl',
+        r'SHIFT' : 'left-shift',
+        r'MENU' : 'left-shift f10',
+        r'APP' : 'escape',
+        r'ESCAPE' : 'escape',
+        r'ESC' : 'esc',
+        r'END' : 'end',
+        r'SPACE' : 'space',
+        r'TAB' : 'tab',
+        r'PRINTSCREEN' : 'print',
+        r'ENTER' : 'enter',
+        r'UPARROW' : 'up',
+        r'UP' : 'up',
+        r'DOWNARROW' : 'down',
+        r'DOWN' : 'down',
+        r'LEFTARROW' : 'left',
+        r'LEFT' : 'left',
+        r'RIGHTARROW' : 'right',
+        r'RIGHT' : 'right',
+        r'CAPSLOCK' : 'capslock',
+        r'F1' : 'f1',
+        r'F2' : 'f2',
+        r'F3' : 'f3',
+        r'F4' : 'f4',
+        r'F5' : 'f5',
+        r'F6' : 'f6',
+        r'F7' : 'f7',
+        r'F8' : 'f8',
+        r'F9' : 'f9',
+        r'F10' : 'f10',
+        r'F11' : 'f11',
+        r'F12' : 'f12',
+        r'F13' : 'f13',
+        r'F14' : 'f14',
+        r'F15' : 'f15',
+        r'F16' : 'f16',
+        r'F17' : 'f17',
+        r'F18' : 'f18',
+        r'F19' : 'f19',
+        r'F20' : 'f20',
+        r'F21' : 'f21',
+        r'F22' : 'f22',
+        r'F23' : 'f23',
+        r'F24' : 'f24',
+        r'DELETE' : 'delete',
+        r'INSERT' : 'insert',
+        r'NUMLOCK' : 'numlock',
+        r'PAGEUP' : 'pgup',
+        r'PAGEDOWN' : 'pgdown',
+        r'PRINTSCREEN' : 'print',
+        r'PRINTSCRN' : 'print',
+        r'PRNTSCRN' : 'print',
+        r'PRTSCN' : 'print',
+        r'PRTSCR' : 'print',
+        r'PRSC' : 'print',
+        r'BREAK' : 'pause',
+        r'PAUSE' : 'pause',
+        r'SCROLLLOCK' : 'scrolllock',
+        r'BACKSPACE' : 'backspace',
+        r'BKSP' : 'backspace',
+        r'MOUSE MIDDLECLICK' : '--b3',
+        r'MOUSE RIGHTCLICK' : '--b2',
+        r'MOUSE LEFTCLICK' : '--b1',
+        r'MOUSE leftCLICK' : '--b1', # Regex is lowering LEFT to left so we need to catch it.
+        r'SLEEP' : 'DELAY',
+        r'DEFAULTDELAY' : 'DEFAULT_DELAY' # We need to add this in between each line if it's set. For debugging
+    }
 
-	# For general mouse commands
-	prefixmouse = "echo "
-	suffixmouse = " | hid-keyboard /dev/hidg1 mouse"
+    # Shortcuts to Windows Command Line
+    WINCMD_rules = {
+        r'WINCMD' : 'GUI d\nDELAY 500\nGUI\nDELAY 1000\nTEXT cmd\nDELAY 1000\nENTER\nDELAY 3000',
+        r'WINCMDUAC' : 'GUI d\nDELAY 500\nGUI\nDELAY 1000\nTEXT cmd\nDELAY 1000\nCTRL SHIFT ENTER\nDELAY 2000\nLEFTARROW\nENTER\nDELAY 3000'
+    }
 
-	# Process input text
-	prefixinput = 'echo -ne "'
-	prefixoutput = '" > /dev/hidg0'
+    # For general keyboard commands
+    prefix = "echo "
+    suffix = " | hid-keyboard /dev/hidg0 keyboard"
 
-	with infile as text:
-		new_text = duckyRules(text.read())
-		infile.close()
+    # For general mouse commands
+    prefixmouse = "echo "
+    suffixmouse = " | hid-keyboard /dev/hidg1 mouse"
 
-	# Write regex to tmp file
-	with tmpfile as result:
-		result.write(new_text)
-		tmpfile.close()
+    # Process input text
+    prefixinput = 'echo -ne "'
+    prefixoutput = '" > /dev/hidg0'
 
-	src = open('tmp.txt', 'r')
-	for line in src:
+    with infile as text:
+        new_text = duckyRules(text.read())
+        infile.close()
 
-		if line.startswith('sleep'):
-			line = line.split()
-			seconds = (Decimal(line[1]) / Decimal(1000)) % 60
-			line[1] = str(seconds)
-			line = ' '.join(line)
-			dest.write('%s\n' % line.rstrip('\n').strip())
+    # Write regex to tmp file
+    with tmpfile as result:
+        result.write(new_text)
+        tmpfile.close()
 
-		elif line.startswith('REM'):
-			line = '#' + line.rstrip('\n').strip('REM')
-			dest.write('%s\n' % line.rstrip('\n').strip())
+    prev_line = ''
+    default_delay = ''
+    src = open('tmp.txt', 'r')
+    for source_line in src:
 
-		# Mouse commands
-		elif line.startswith('--b'):
-			dest.write('%s%s%s\n' % (prefixmouse, line.rstrip('\n').strip(), suffixmouse))
+        if source_line == '' or source_line == '\n' or source_line.startswith('//'):
+            continue
 
-		elif line.startswith('MOUSE'):
-			line = line.strip('MOUSE ')
-			dest.write('%s%s%s\n' % (prefixmouse, line.rstrip('\n').strip(), suffixmouse))
+        repeat_counter = 1
+        while repeat_counter > 0:
 
-		# Shortcuts to Windows Command Line
-		elif line.startswith('WINCMD'):
-			dest.write('echo -ne "\\x08\\x00\\x00\\x00\\x00\\x00\\x00\\x00" > /dev/hidg0\n') # Windows Key
-			dest.write('echo -ne "\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00" > /dev/hidg0\n')
-			dest.write('sleep 1\n')
-			dest.write('echo -ne "\\x00\\x00\\x00\\x06\\x00\\x00\\x00\\x00" > /dev/hidg0\n') #C
-			dest.write('echo -ne "\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00" > /dev/hidg0\n')
-			dest.write('sleep 0.1 \n')
-			dest.write('echo -ne "\\x00\\x00\\x00\\x10\\x00\\x00\\x00\\x00" > /dev/hidg0\n') #M
-			dest.write('echo -ne "\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00" > /dev/hidg0\n')
-			dest.write('sleep 0.1 \n')
-			dest.write('echo -ne "\\x00\\x00\\x00\\x07\\x00\\x00\\x00\\x00" > /dev/hidg0\n') #D
-			dest.write('echo -ne "\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00" > /dev/hidg0\n')
-			dest.write('sleep 1\n')
-			dest.write('echo -ne "\\x10\\x00\\x00\\x00\\x00\\x00\\x00\\x00" > /dev/hidg0\n')
-			dest.write('echo -ne "\\x20\\x00\\x00\\x00\\x00\\x00\\x00\\x00" > /dev/hidg0\n')
-			dest.write('sleep 1\n')
-			dest.write('echo -ne "\\x00\\x00\\x00\\x28\\x00\\x00\\x00\\x00" > /dev/hidg0\n')
-			dest.write('echo -ne "\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00" > /dev/hidg0\n')
-			dest.write('sleep 3\n')
+            repeat_counter -= 1
+            line = source_line
 
-		elif line.startswith('WIN7CMD'):
-			dest.write('echo -ne "\\x08\\x00\\x00\\x00\\x00\\x00\\x00\\x00" > /dev/hidg0\n') # Windows Key
-			dest.write('echo -ne "\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00" > /dev/hidg0\n')
-			dest.write('sleep 1\n')
-			dest.write('echo -ne "\\x00\\x00\\x00\\x06\\x00\\x00\\x00\\x00" > /dev/hidg0\n') #C
-			dest.write('echo -ne "\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00" > /dev/hidg0\n')
-			dest.write('sleep 0.1 \n')
-			dest.write('echo -ne "\\x00\\x00\\x00\\x10\\x00\\x00\\x00\\x00" > /dev/hidg0\n') #M
-			dest.write('echo -ne "\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00" > /dev/hidg0\n')
-			dest.write('sleep 0.1 \n')
-			dest.write('echo -ne "\\x00\\x00\\x00\\x07\\x00\\x00\\x00\\x00" > /dev/hidg0\n') #D
-			dest.write('echo -ne "\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00" > /dev/hidg0\n')
-			dest.write('sleep 1\n')
-			dest.write('echo left-ctrl left-shift return | hid-keyboard /dev/hidg0 keyboard\n')
-			dest.write('sleep 2\n')
-			if (args.layout=="us"):
-				dest.write('echo left-alt y | hid-keyboard /dev/hidg0 keyboard\n')
-			elif (args.layout=="fr"):
-				dest.write('echo left-alt o | hid-keyboard /dev/hidg0 keyboard\n')
-			elif (args.layout=="de"):
-				dest.write('echo left-alt j | hid-keyboard /dev/hidg0 keyboard\n')
-			elif (args.layout=="es"):
-				dest.write('echo left-alt s | hid-keyboard /dev/hidg0 keyboard\n')
-			elif (args.layout=="sv"):
-				dest.write('echo left-alt j | hid-keyboard /dev/hidg0 keyboard\n')
-			elif (args.layout=="it"):
-				dest.write('echo left-alt s | hid-keyboard /dev/hidg0 keyboard\n')
-			elif (args.layout=="uk"):
-				dest.write('echo left-alt y | hid-keyboard /dev/hidg0 keyboard\n')
-			elif (args.layout=="ru"):
-				dest.write('echo left-alt d | hid-keyboard /dev/hidg0 keyboard\n')
-			elif (args.layout=="dk"):
-				dest.write('echo left-alt j | hid-keyboard /dev/hidg0 keyboard\n')
-			elif (args.layout=="no"):
-				dest.write('echo left-alt j | hid-keyboard /dev/hidg0 keyboard\n')
-			elif (args.layout=="pt"):
-				dest.write('echo left-alt s | hid-keyboard /dev/hidg0 keyboard\n')
-			elif (args.layout=="be"):
-				dest.write('echo left-alt o | hid-keyboard /dev/hidg0 keyboard\n')
-			dest.write('sleep 3\n')			
+            if line.startswith('DELAY '):
+                line = line.rstrip('\n')[6:].strip()
+                seconds = (Decimal(line) / Decimal(1000)) % 60
+                line = str(seconds)
+                dest.write('sleep %s\n' % line.strip().lower())
 
-		elif line.startswith('WIN8CMD'):
-			dest.write('sleep 1\n')
-			dest.write('echo -ne "\\x08\\x00\\x00\\x00\\x00\\x00\\x00\\x00" > /dev/hidg0\n') # Windows Key
-			dest.write('echo -ne "\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00" > /dev/hidg0\n')
-			dest.write('sleep 1\n')
-			dest.write('echo -ne "\\x00\\x00\\x00\\x06\\x00\\x00\\x00\\x00" > /dev/hidg0\n') #C
-			dest.write('echo -ne "\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00" > /dev/hidg0\n')
-			dest.write('sleep 0.1 \n')
-			dest.write('echo -ne "\\x00\\x00\\x00\\x10\\x00\\x00\\x00\\x00" > /dev/hidg0\n') #M
-			dest.write('echo -ne "\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00" > /dev/hidg0\n')
-			dest.write('sleep 0.1 \n')
-			dest.write('echo -ne "\\x00\\x00\\x00\\x07\\x00\\x00\\x00\\x00" > /dev/hidg0\n') #D
-			dest.write('echo -ne "\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00" > /dev/hidg0\n')
-			dest.write('sleep 0.1 \n')
-			dest.write('echo -ne "\\x10\\x00\\x00\\x00\\x00\\x00\\x00\\x00" > /dev/hidg0\n')
-			dest.write('echo -ne "\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00" > /dev/hidg0\n')
-			dest.write('sleep 1\n')
-			dest.write('echo -ne "\\x02\\x00\\x00\\x43\\x00\\x00\\x00\\x00" > /dev/hidg0\n')
-			dest.write('echo -ne "\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00" > /dev/hidg0\n')
-			dest.write('sleep 1\n')
-			dest.write('echo -ne "\\x01\\x00\\x00\\x51\\x00\\x00\\x00\\x00" > /dev/hidg0\n')
-			dest.write('echo -ne "\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00" > /dev/hidg0\n')
-			dest.write('sleep 1\n')
-			dest.write('echo -ne "\\x01\\x00\\x00\\x51\\x00\\x00\\x00\\x00" > /dev/hidg0\n')
-			dest.write('echo -ne "\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00" > /dev/hidg0\n')
-			dest.write('sleep 1\n')
-			dest.write('echo -ne "\\x01\\x00\\x00\\x51\\x00\\x00\\x00\\x00" > /dev/hidg0\n')
-			dest.write('echo -ne "\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00" > /dev/hidg0\n')
-			dest.write('sleep 1\n')
-			dest.write('echo -ne "\\x01\\x00\\x00\\x51\\x00\\x00\\x00\\x00" > /dev/hidg0\n')
-			dest.write('echo -ne "\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00" > /dev/hidg0\n')
-			dest.write('sleep 2\n')
-			dest.write('echo -ne "\\x00\\x00\\x00\\x28\\x00\\x00\\x00\\x00" > /dev/hidg0\n')
-			dest.write('echo -ne "\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00" > /dev/hidg0\n')
-			dest.write('sleep 2\n')
-			if (args.layout=="us"):
-				dest.write('echo left-alt y | hid-keyboard /dev/hidg0 keyboard\n')
-			elif (args.layout=="fr"):
-				dest.write('echo left-alt o | hid-keyboard /dev/hidg0 keyboard\n')
-			elif (args.layout=="de"):
-				dest.write('echo left-alt j | hid-keyboard /dev/hidg0 keyboard\n')
-			elif (args.layout=="es"):
-				dest.write('echo left-alt s | hid-keyboard /dev/hidg0 keyboard\n')
-			elif (args.layout=="sv"):
-				dest.write('echo left-alt j | hid-keyboard /dev/hidg0 keyboard\n')
-			elif (args.layout=="it"):
-				dest.write('echo left-alt s | hid-keyboard /dev/hidg0 keyboard\n')
-			elif (args.layout=="uk"):
-				dest.write('echo left-alt y | hid-keyboard /dev/hidg0 keyboard\n')
-			elif (args.layout=="ru"):
-				dest.write('echo left-alt d | hid-keyboard /dev/hidg0 keyboard\n')
-			elif (args.layout=="dk"):
-				dest.write('echo left-alt j | hid-keyboard /dev/hidg0 keyboard\n')
-			elif (args.layout=="no"):
-				dest.write('echo left-alt j | hid-keyboard /dev/hidg0 keyboard\n')
-			elif (args.layout=="pt"):
-				dest.write('echo left-alt s | hid-keyboard /dev/hidg0 keyboard\n')
-			elif (args.layout=="be"):
-				dest.write('echo left-alt o | hid-keyboard /dev/hidg0 keyboard\n')
-			dest.write('sleep 3\n')
+            else:
 
-		# STRING to type and reads \n as ENTER
-		elif line.startswith('STRING'):
-			line = line.strip('STRING ')
-			for char in line:
-                                if args.layout== "fr" : 
-                                    print char
-				elif args.layout=="us" : line = dict_us[char]
-				elif args.layout=="fr" : line = dict_fr[char]
-				elif args.layout=="de" : line = dict_de[char]
-				elif args.layout=="es" : line = dict_es[char]
-				elif args.layout=="sv" : line = dict_sv[char]
-				elif args.layout=="it" : line = dict_it[char]
-				elif args.layout=="uk" : line = dict_uk[char]
-				elif args.layout=="ru" : line = dict_ru[iso_ru[char]]
-				elif args.layout=="dk" : line = dict_dk[char]
-				elif args.layout=="no" : line = dict_no[char]
-				elif args.layout=="pt" : line = dict_pt[char]
-				elif args.layout=="be" : line = dict_be[char]
-				
-				dest.write('%s%s%s\n' % (prefixinput, line.rstrip('\n').strip(), prefixoutput))
-				
-				dest.write('echo -ne "\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00" > /dev/hidg0\n') # releases key
-				dest.write('sleep 0.1 \n') # Slow things down
-		
-		# TEXT to type and NOT pass \n as ENTER.  Allows text to stay put.
-		elif line.startswith('TEXT'):
-			line = line.rstrip('\n').strip('TEXT ')
-			for char in line:
-				
-				if args.layout=="us" : line = dict_us[char]
-				elif args.layout=="fr" : line = dict_fr[char]
-				elif args.layout=="de" : line = dict_de[char]
-				elif args.layout=="es" : line = dict_es[char]
-				elif args.layout=="sv" : line = dict_sv[char]
-				elif args.layout=="it" : line = dict_it[char]
-				elif args.layout=="uk" : line = dict_uk[char]
-				elif args.layout=="ru" : line = dict_ru[iso_ru[char]]
-				elif args.layout=="dk" : line = dict_dk[char]
-				elif args.layout=="no" : line = dict_no[char]
-				elif args.layout=="pt" : line = dict_pt[char]
-				elif args.layout=="be" : line = dict_be[char]
+                if line.startswith('DEFAULT_DELAY'):
+                    line = line.rstrip('\n')[13:].strip()
+                    if line != '':
+                        seconds = (Decimal(line) / Decimal(1000)) % 60
+                        line = str(seconds)
+                    default_delay = line
+                    break
 
-				dest.write('%s%s%s\n' % (prefixinput, line.rstrip('\n').strip(), prefixoutput))
-				
-				dest.write('echo -ne "\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00" > /dev/hidg0\n') # releases key
-				dest.write('sleep 0.1 \n') # Slow things down
-		else:
-			dest.write('%s%s%s\n' % (prefix, line.rstrip('\n').strip(), suffix))
+                elif line.startswith('REM'):
+                    line = '#' + line.rstrip('\n')[3:]
+                    dest.write('%s\n' % line.strip())
 
-	src.close()
-	dest.close()
-	os.remove("tmp.txt")
-	print "File saved to location: " + (args.hunterscript)
+                # Mouse commands
+                elif line.startswith('--b'):
+                    dest.write('%s%s%s\n' % (prefixmouse, line.rstrip('\n').strip(), suffixmouse))
+
+                elif line.startswith('MOUSE '):
+                    line = line[6:]
+                    dest.write('%s%s%s\n' % (prefixmouse, line.rstrip('\n').strip(), suffixmouse))
+
+                # STRING to type and reads \n as ENTER
+                elif line.startswith('STRING '):
+                    line = line[7:]
+                    for char in line:
+
+                        if char != '\n':
+                            if args.layout == "ru":
+                                char = iso_ru[char]
+
+                            line = dicts[args.layout+'_bin'].get(char)
+                            if line is not None:
+                                if isinstance(line, str):
+                                    dest.write('%s%s%s\n' % (prefix, line.rstrip('\n').strip(), suffix))
+                                else:
+                                    for elem in line:
+                                        dest.write('%s%s%s\n' % (prefix, elem.rstrip('\n').strip(), suffix))
+                            else:
+                                line = dicts[args.layout][char]
+                                dest.write('%s%s%s\n' % (prefixinput, line.rstrip('\n').strip(), prefixoutput))
+                                dest.write('echo -ne "\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00" > /dev/hidg0\n') # releases key
+                                dest.write('sleep 0.03 \n') # Slow things down
+
+                    dest.write('echo enter | hid-keyboard /dev/hidg0 keyboard\n') # Add enter
+
+                # TEXT to type and NOT pass \n as ENTER.  Allows text to stay put.
+                elif line.startswith('TEXT '):
+                    line = line.rstrip('\n')
+                    line = line[5:]
+                    for char in line:
+
+                        if char != '\n':
+                            if args.layout == "ru":
+                                char = iso_ru[char]
+
+                            line = dicts[args.layout+'_bin'].get(char)
+                            if line is not None:
+                                if isinstance(line, str):
+                                    dest.write('%s%s%s\n' % (prefix, line.rstrip('\n').strip(), suffix))
+                                else:
+                                    for elem in line:
+                                        dest.write('%s%s%s\n' % (prefix, elem.rstrip('\n').strip(), suffix))
+                            else:
+                                line = dicts[args.layout][char]
+                                dest.write('%s%s%s\n' % (prefixinput, line.rstrip('\n').strip(), prefixoutput))
+                                dest.write('echo -ne "\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00" > /dev/hidg0\n') # releases key
+                                dest.write('sleep 0.03 \n') # Slow things down
+
+                elif line.startswith('REPEAT '):
+                    line = line.rstrip('\n')[7:]
+                    repeat_counter = int(line)
+                    source_line = prev_line
+
+                    if source_line == '':
+                        break
+
+                    continue
+
+                else:
+                    dest.write('%s%s%s\n' % (prefix, line.rstrip('\n').strip(), suffix))
+
+                if default_delay != '':
+                    dest.write('sleep %s\n' % default_delay.strip().lower())
+
+        prev_line = source_line
+
+    src.close()
+    dest.close()
+    os.remove("tmp.txt")
+    print(("File saved to location: " + (args.hunterscript)))
+
