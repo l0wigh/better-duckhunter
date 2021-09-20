@@ -1,6 +1,7 @@
 #! /usr/bin/env python
 
-#Created by @binkybear and @byt3bl33d3r
+# Created by @binkybear and @byt3bl33d3r
+# Fork and Update by L0Wigh
 
 import sys
 import re
