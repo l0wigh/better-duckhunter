@@ -258,8 +258,9 @@ if __name__ == "__main__":
 		elif line.startswith('STRING'):
 			line = line.strip('STRING ')
 			for char in line:
-				
-				if args.layout=="us" : line = dict_us[char]
+                                if args.layout== "fr" : 
+                                    print char
+				elif args.layout=="us" : line = dict_us[char]
 				elif args.layout=="fr" : line = dict_fr[char]
 				elif args.layout=="de" : line = dict_de[char]
 				elif args.layout=="es" : line = dict_es[char]
