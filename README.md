@@ -1,3 +1,11 @@
+TODO
+==========
+- [ ] Correct issue with french keyboard where 6 is changed to -
+- [ ] Correct issue with french keyboard where [] aren't pressed for some reason
+- [ ] Port the script to python 3
+- [ ] Make it easier to run on Nethunter
+
+
 Duck Hunter 
 ==========
 
