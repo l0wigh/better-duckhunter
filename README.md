@@ -1,12 +1,4 @@
-TODO
-==========
-- [X] Correct issue with french keyboard where 6 is changed to -
-- [ ] Correct issue with french keyboard where [] aren't pressed for some reason
-- [ ] Port the script to python 3
-- [ ] Make it easier to run on Nethunter
-
-
-Duck Hunter 
+Better Duck Hunter
 ==========
 
 Converts a USB Rubber ducky script into a Kali Nethunter friendly format for the HID attack
@@ -14,6 +6,13 @@ Converts a USB Rubber ducky script into a Kali Nethunter friendly format for the
 Original code and concept by @binkybear
 
 Quack
+
+This is the updated version
+
+The original code was ported to python 3 by the nethunter team
+
+This patch made it work completely.
+
 
 ### Running Duck Hunter
 ```
@@ -97,3 +96,7 @@ Will move 100 pixels to right.
 MOUSE 0 -50
 ```
 Will move 50 pixels up.
+
+TODO
+==========
+- [ ] Make it easier to run on Nethunter
