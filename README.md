@@ -16,11 +16,21 @@ This patch made it work completely.
 
 ### Running Duck Hunter
 ```
-duckhunter.py -l {us} input.txt output.sh
+duckhunter.py -l us input.txt output.sh
 ```
 Suppourts multiple languages: us, fr, de, es, sv, it, uk, ru, dk, no, pt, be
 
 Output file can be run as a regular shell file on Nethunter devices.
+
+You'll need to run the output with the android terminal (not kali).
+
+The easiest way is to do that is by moving the output to the /sdcard folder (/ in kali).
+
+Give execution rights with chmod.
+
+Run the script with android terminal.
+
+Obviously you need to change the settings in USB Arsenal for HID before launching the script.
 
 ### Keyboard Commands
 
