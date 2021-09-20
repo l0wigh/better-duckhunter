@@ -6,6 +6,7 @@ import sys
 import re
 import os
 import argparse
+from keyseed import *
 from decimal import Decimal #for conversion milliseconds -> seconds
 
 parser = argparse.ArgumentParser(description='Converts USB rubber ducky scripts to a Nethunter format', epilog="Quack Quack")
