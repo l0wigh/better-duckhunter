@@ -24,7 +24,7 @@ Output file can be run as a regular shell file on Nethunter devices.
 
 You'll need to run the output with the android terminal (not kali).
 
-The easiest way is to do that is by moving the output to the /sdcard folder (/ in kali).
+The easiest way is by moving the output to /data/local/nhsystem/kali-arm64/ (/ in kali).
 
 Give execution rights with chmod.
 
