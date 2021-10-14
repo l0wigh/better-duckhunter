@@ -18,7 +18,7 @@ This patch made it work completely.
 ```
 duckhunter.py -l us input.txt output.sh
 ```
-Suppourts multiple languages: us, fr, de, es, sv, it, uk, ru, dk, no, pt, be
+Supports multiple languages: us, fr, de, es, sv, it, uk, ru, dk, no, pt, be
 
 Output file can be run as a regular shell file on Nethunter devices.
 
