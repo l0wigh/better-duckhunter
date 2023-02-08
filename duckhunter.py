@@ -121,11 +121,11 @@ if __name__ == "__main__":
 
     # For general keyboard commands
     prefix = "echo "
-    suffix = " | hid-keyboard /dev/hidg0 keyboard"
+    suffix = " | /data/user/0/com.offsec.nethunter/files/scripts/bin/hid-keyboard /dev/hidg0 keyboard"
 
     # For general mouse commands
     prefixmouse = "echo "
-    suffixmouse = " | hid-keyboard /dev/hidg1 mouse"
+    suffixmouse = " | /data/user/0/com.offsec.nethunter/files/scripts/bin/hid-keyboard /dev/hidg1 mouse"
 
     # Process input text
     prefixinput = 'echo -ne "'
@@ -204,7 +204,7 @@ if __name__ == "__main__":
                                 dest.write('echo -ne "\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00" > /dev/hidg0\n') # releases key
                                 dest.write('sleep 0.03 \n') # Slow things down
 
-                    dest.write('echo enter | hid-keyboard /dev/hidg0 keyboard\n') # Add enter
+                    dest.write('echo enter | /data/user/0/com.offsec.nethunter/files/scripts/bin/hid-keyboard /dev/hidg0 keyboard\n') # Add enter
 
                 # TEXT to type and NOT pass \n as ENTER.  Allows text to stay put.
                 elif line.startswith('TEXT '):
